@@ -13,7 +13,9 @@
     <title>Freehua</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <router-link :key="$route.path"></router-link>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
