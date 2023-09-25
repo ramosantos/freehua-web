@@ -27,9 +27,11 @@
             <a class="nav-link" href="#">Sobre</a>
           </li>
         </ul>
+        <div class='container d-flex justify-content-end'>
         <router-link to="/login">
           <button type="button" class="btn btn-primary ms-auto">Entrar</button>
         </router-link>
+        </div>
       </div>
     </div>
   </nav>
