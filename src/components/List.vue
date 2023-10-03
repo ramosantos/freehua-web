@@ -1,4 +1,4 @@
-<script setup>
+<script>
     // TODO: FAZER MAPA ELEMENTOS MANGÁS POSTADOS
 </script>
 

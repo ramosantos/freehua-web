@@ -1,7 +1,3 @@
-<script setup>
-    import List from '../components/List.vue';
-</script>
-
 <template>
     <div class="d-flex flex-column">
     <List/>
@@ -12,6 +8,23 @@
  <router-link to='/update'>
     <button type="button" class="btn btn-primary ms-4">Novo capitulo</button>
     </router-link>
+ <router-link to='/login'>
+    <button @click='logoff' type="button" class="btn btn-danger ms-4">Sair</button>
+    </router-link>
     </div>
     </div>
 </template>
+
+<script setup>
+    import List from '../components/List.vue';
+</script>
+
+<script>
+    export default {
+        methods: {
+            logoff() {
+                localStorage['userCredential'] = null;
+            }
+        }
+    }
+</script>
