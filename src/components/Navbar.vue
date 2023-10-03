@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-sm bg-body-tertiary fixed-top" :key="user">
     <div class="container-fluid">
-        <router-link to='/'>
-      <a class="navbar-brand" href="#">Freehua</a>
-        </router-link>
+      <router-link to="/">
+        <a class="navbar-brand" href="#">Freehua</a>
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -27,17 +27,21 @@
             <a class="nav-link" href="#">Sobre</a>
           </li>
         </ul>
-        <div class='container d-flex justify-content-end'>
-            <div v-if="user">
-                <router-link to="/dashboard">
-                    <button type="button" class="btn btn-secondary ms-auto">Painel</button>
+        <div class="container d-flex justify-content-end">
+          <div v-if="user">
+            <router-link to="/dashboard">
+              <button type="button" class="btn btn-secondary ms-auto">
+                Painel
+              </button>
             </router-link>
-            </div>
-            <div v-else>
-        <router-link to="/login">
-          <button type="button" class="btn btn-primary ms-auto">Entrar</button>
-        </router-link>
-            </div>
+          </div>
+          <div v-else>
+            <router-link to="/login">
+              <button type="button" class="btn btn-primary ms-auto">
+                Entrar
+              </button>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -46,10 +50,18 @@
 
 <script>
 export default {
-  data() {
-    return {
-      user: JSON.parse(localStorage.getItem('userCredential'))
-    };
-  }
-}
+    data() {
+        return {
+            user: null
+        };
+    },
+    watch: {
+        $route(to, from) {
+            this.user = localStorage.getItem('userCredential');
+        }
+    },
+    created() {
+        this.user = localStorage.getItem('userCredential');
+    }
+  };
 </script>
