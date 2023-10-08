@@ -80,3 +80,4 @@ createApp(App)
     modules: [VueFireAuth()],
   })
   .mount("#app");
+

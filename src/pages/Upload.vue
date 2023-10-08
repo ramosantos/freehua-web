@@ -57,6 +57,15 @@
             placeholder="Em um colégio técnico, jovens alunos da ETEC Taboão da Serra descobrem poderes extraordinários que transformam o simples arroz doce da merenda em elaboradas obras de arte com classificação máxima."
           ></textarea>
         </div>
+        <div class="form-group mb-4">
+          <label class="mb-2">Imagem da Capa</label>
+          <input
+            class="form-control"
+            type="file"
+            @change="handleCoverChange"
+            accept=".jpg,.jpeg"
+          />
+        </div>
         <button
           @click.prevent="submit"
           type="submit"
@@ -73,7 +82,8 @@
 </template>
 
 <script setup>
-import { collection, addDoc } from "firebase/firestore";
+import { doc, collection, addDoc, updateDoc } from "firebase/firestore";
+import { ref, getStorage, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../components/Firebase.js";
 </script>
 
@@ -86,6 +96,7 @@ export default {
       book_author: "",
       book_title: "",
       book_type: "",
+      book_cover: null,
     };
   },
   methods: {
@@ -95,25 +106,42 @@ export default {
         this.book_title === "" ||
         this.book_genre === "" ||
         this.book_summary === "" ||
-        this.book_author === ""
+        this.book_author === "" ||
+        this.book_cover === null
       ) {
         alert("Preencha tudo");
         return null;
       }
 
       try {
-        const docRef = await addDoc(collection(db, "books"), {
+        const bookReference = await addDoc(collection(db, "books"), {
           artists: this.book_author,
-          status: "active",
           summary: this.book_summary,
           tags: this.book_genre,
           title: this.book_title,
           type: this.book_type,
         });
-        alert("ID DO LIVRO ", docRef.id);
+
+        const storage = getStorage();
+        const storageReference = ref(
+          storage,
+          `images/cover_${docReference.id}`,
+        );
+        const imageReference = await uploadBytes(
+          storageReference,
+          this.book_cover,
+        );
+        const imageURL = await getDownloadURL(storageReference);
+        const imageValue = { cover_url: imageURL };
+        const imageInsert = await updateDoc(bookReference, imageValue);
+
+        alert(this.book_title + " FOI CRIADO COM SUCESSO");
       } catch (e) {
         alert(e);
       }
+    },
+    handleCoverChange(event) {
+      this.book_cover = event.target.files[0];
     },
   },
 };
