@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <h2>Seus livros</h2>  
+    <h2>Capitulos postados</h2>  
     <List class="mt-4"/>
     <div class="mt-4">
       <router-link to="/upload">
