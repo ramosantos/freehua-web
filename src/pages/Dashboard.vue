@@ -1,13 +1,10 @@
 <template>
-  <div class="d-flex flex-column">
-    <h2>Capitulos postados</h2>  
-    <List class="mt-4"/>
     <div class="mt-4">
       <router-link to="/upload">
-        <button type="button" class="btn btn-primary">Novo livro</button>
+        <button type="button" class="btn btn-lg btn-primary">Novo livro</button>
       </router-link>
       <router-link to="/update">
-        <button type="button" class="btn btn-primary ms-4">
+        <button type="button" class="btn btn-lg btn-primary ms-4">
           Novo capitulo
         </button>
       </router-link>
@@ -17,12 +14,7 @@
         </button>
       </router-link>
     </div>
-  </div>
 </template>
-
-<script setup>
-import List from "../components/List.vue";
-</script>
 
 <script>
 export default {

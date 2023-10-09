@@ -71,7 +71,7 @@
           type="submit"
           class="btn btn-primary btn-lg"
         >
-          Criar
+          Criar livro
         </button>
         <router-link to="/dashboard">
           <button class="btn btn-secondary ms-4">Voltar</button>
@@ -125,7 +125,7 @@ export default {
         const storage = getStorage();
         const storageReference = ref(
           storage,
-          `images/cover_${docReference.id}`,
+          `images/cover_${bookReference.id}`,
         );
         const imageReference = await uploadBytes(
           storageReference,

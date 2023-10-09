@@ -21,7 +21,10 @@
           accept=".pdf"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Adicionar capítulo</button>
+      <button type="submit" class="btn btn-primary btn-lg">Adicionar capítulo</button>
+ <router-link to="/dashboard">
+          <button class="btn btn-secondary ms-4">Voltar</button>
+        </router-link>
     </form>
   </div>
 </template>
