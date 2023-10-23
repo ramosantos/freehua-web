@@ -2,11 +2,11 @@
   <div class="container pt-5">
     <div class="row">
       <div class="col-md-6">
-        <form>
+        <form ref="form">
           <div class="form-group mb-4">
             <label class="mb-2">Nome da obra</label>
             <input
-              v-model="book_title"
+              v-model="book.title"
               type="text"
               class="form-control"
               placeholder="Solo Leveling"
@@ -14,7 +14,7 @@
           </div>
           <div class="form-group mb-4">
             <label class="mb-2">Tipo do livro</label>
-            <select v-model="book_type" class="form-control">
+            <select v-model="book.type" class="form-control">
               <option value="manhua">Manhuá (China)</option>
               <option value="manhwa">Manhwa (Coréia)</option>
             </select>
@@ -26,7 +26,7 @@
         <form>
           <div class="form-group mb-4">
             <label class="mb-2">Gênero</label>
-            <select v-model="book_genre" class="form-control">
+            <select v-model="book.genre" class="form-control">
               <option value="adventure">Aventura</option>
               <option value="romance">Romance</option>
               <option value="xianxia">Cultivo (Xianxia)</option>
@@ -35,7 +35,7 @@
           <div class="form-group">
             <label class="mb-2">Autor(a)</label>
             <input
-              v-model="book_author"
+              v-model="book.author"
               type="text"
               class="form-control"
               placeholder="Hwonbu"
@@ -50,7 +50,7 @@
         <div class="form-group mb-4">
           <label class="mb-2">Sumário</label>
           <textarea
-            v-model="book_summary"
+            v-model="book.summary"
             class="form-control"
             cols="30"
             rows="4"
@@ -82,66 +82,34 @@
 </template>
 
 <script setup>
-import { doc, collection, addDoc, updateDoc } from "firebase/firestore";
-import { ref, getStorage, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db } from "../components/Firebase.js";
+import { submitBook } from "../components/Uploader";
 </script>
 
 <script>
 export default {
   data() {
     return {
-      book_genre: "",
-      book_summary: "",
-      book_author: "",
-      book_title: "",
-      book_type: "",
-      book_cover: null,
+      book: {
+        genre: "",
+        summary: "",
+        author: "",
+        title: "",
+        type: "",
+        cover: null,
+      },
     };
   },
   methods: {
-    async submit() {
-      if (
-        this.book_type === "" ||
-        this.book_title === "" ||
-        this.book_genre === "" ||
-        this.book_summary === "" ||
-        this.book_author === "" ||
-        this.book_cover === null
-      ) {
-        alert("Preencha tudo");
-        return null;
-      }
-
-      try {
-        const bookReference = await addDoc(collection(db, "books"), {
-          artists: this.book_author,
-          summary: this.book_summary,
-          tags: this.book_genre,
-          title: this.book_title,
-          type: this.book_type,
-        });
-
-        const storage = getStorage();
-        const storageReference = ref(
-          storage,
-          `images/cover_${bookReference.id}`,
-        );
-        const imageReference = await uploadBytes(
-          storageReference,
-          this.book_cover,
-        );
-        const imageURL = await getDownloadURL(storageReference);
-        const imageValue = { cover_url: imageURL };
-        const imageInsert = await updateDoc(bookReference, imageValue);
-
-        alert(this.book_title + " FOI CRIADO COM SUCESSO");
-      } catch (e) {
-        alert(e);
-      }
-    },
     handleCoverChange(event) {
-      this.book_cover = event.target.files[0];
+      this.book.cover = event.target.files[0];
+    },
+    submit() {
+      try {
+        submitBook(this.book);
+        this.$refs.form.reset();
+      } catch (error) {
+        alert(error);
+      }
     },
   },
 };

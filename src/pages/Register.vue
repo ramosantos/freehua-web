@@ -1,7 +1,15 @@
 <template>
-  <div class="container-fluid border rounded border-secondary p-4 ">
+  <div class="container-fluid border rounded border-secondary p-4">
     <form>
-        <h2>Cadastro</h2>
+      <h2>Cadastro</h2>
+      <div class="form-group my-4">
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          v-model="username"
+          placeholder="Nome de usuário"
+        />
+      </div>
       <div class="form-group my-4">
         <input
           type="email"
@@ -50,6 +58,7 @@ import { registerUser } from "../components/Logger.js";
 export default {
   data() {
     return {
+      username: "",
       email: "",
       password: "",
       confirmation: "",
@@ -62,12 +71,12 @@ export default {
         return null;
       }
 
-      if ((this.email == "") | (this.password == "")) {
+      if ((this.email == "") | (this.password == "") | (this.username == "")) {
         alert("Preencha tudo");
         return null;
       }
 
-      const user = registerUser(this.email, this.password);
+      const user = registerUser(this.email, this.password, this.username);
       if (user) {
         this.$router.push("/login");
       }
@@ -75,4 +84,3 @@ export default {
   },
 };
 </script>
-
