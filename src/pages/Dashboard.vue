@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import { fetchLastChapters } from "../components/Updater.js";
 </script>
 
 <script>
@@ -38,15 +37,6 @@ export default {
     return {
       lastChapters: [],
     };
-  },
-  created() {
-    fetchLastChapters()
-      .then((data) => {
-        this.lastChapters = data;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   },
   methods: {
     logoff() {

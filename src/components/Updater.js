@@ -12,9 +12,6 @@ import {
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../components/Firebase.js";
 
-const userCredential = JSON.parse(localStorage.getItem("userCredential")) || {};
-const poster_uid = userCredential.uid ? userCredential.uid.toString() : null;
-
 export async function fetchLibrary() {
   const library = [];
   const libraryReference = query(collection(db, "books"));
@@ -34,19 +31,25 @@ export async function fetchLibrary() {
 }
 
 export async function submitChapter(localChapter) {
+  const userCredential = JSON.parse(localStorage.getItem("userCredential"));
+  const poster_uid = userCredential.uid.toString();
+
   if (localChapter.parent === null || localChapter.file === null) {
     alert("Insira tudo");
     return null;
   }
 
   try {
-    const chapterReference = await addDoc(collection(db, "chapters"), {
-      chapter_parent: doc(db, "books/" + localChapter.parent),
-      chapter_title: localChapter.title,
-      chapter_poster: poster_uid,
-      chapter_release: new Date(),
-      chapter_content: "",
-    });
+    const chapterReference = await addDoc(
+      collection(db, `books/${localChapter.parent}/chapters`),
+      {
+        chapter_parent: doc(db, `books/${localChapter.parent}`),
+        chapter_title: localChapter.title,
+        chapter_poster: poster_uid,
+        chapter_release: new Date(),
+        chapter_content: "",
+      },
+    );
 
     const storage = getStorage();
     const storageReference = ref(storage, `releases/${chapterReference.id}`);
@@ -65,6 +68,7 @@ export async function submitChapter(localChapter) {
   }
 }
 
+/*
 export async function fetchLastChapters() {
   const chapters = [];
   const chaptersReference = collection(db, "chapters");
@@ -97,3 +101,4 @@ console.log(querySnapshot);
     return error, false;
   }
 }
+    */
