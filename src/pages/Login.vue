@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid border rounded border-secondary p-4 ">
+  <div class="container-fluid border rounded border-secondary p-4">
     <form>
-        <h2>Login</h2>
+      <h2>Login</h2>
       <div class="form-group my-4">
         <input
           type="email"
@@ -17,6 +17,11 @@
           v-model="password"
           placeholder="Senha"
         />
+        <div class="container-fluid pt-2">
+          <router-link to="/recover">
+            <a>Esqueci a senha</a>
+          </router-link>
+        </div>
       </div>
       <div class="container-fluid">
         <button

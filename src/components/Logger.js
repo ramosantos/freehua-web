@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -57,5 +58,15 @@ const storageUser = async (userId, username) => {
   } catch (error) {
     console.error("Erro ao armazenar o usuário no Firestore:", error);
     return false;
+  }
+};
+
+export const recoverUser = async (email) => {
+  try {
+    const recovery = await sendPasswordResetEmail(auth, email);
+    return recovery;
+  } catch (error) {
+    alert(error.message);
+    return null;
   }
 };

@@ -8,6 +8,7 @@ import App from "./App.vue";
 import { firebaseApp } from "./components/Firebase.js";
 import "./style.css";
 
+import Recover from "./pages/Recover.vue";
 import Dashboard from "./pages/Dashboard.vue";
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: Register,
+    },
+    {
+      path: "/recover",
+      name: "Recover",
+      component: Recover,
     },
     {
       path: "/dashboard",
