@@ -65,7 +65,7 @@ export default {
     };
   },
   methods: {
-    submit() {
+    async submit() {
       if (this.confirmation !== this.password) {
         alert("Senhas não condizem");
         return null;
@@ -76,9 +76,17 @@ export default {
         return null;
       }
 
-      const user = registerUser(this.email, this.password, this.username);
-      if (user) {
-        this.$router.push("/login");
+      try {
+        const user = await registerUser(
+          this.email,
+          this.password,
+          this.username,
+        );
+        if (user) {
+          this.$router.push("/login");
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
   },

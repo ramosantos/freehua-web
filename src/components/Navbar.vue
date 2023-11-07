@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm bg-body-tertiary fixed-top" :key="user">
+  <nav class="kukas navbar navbar-expand-sm bg-body-tertiary fixed-top" :key="user">
     <div class="container-fluid">
       <router-link to="/">
         <a class="navbar-brand" href="#">Freehua</a>
@@ -65,3 +65,4 @@ export default {
     }
   };
 </script>
+
