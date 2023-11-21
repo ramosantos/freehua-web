@@ -15,6 +15,8 @@ import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 import Upload from "./pages/Upload.vue";
 import Update from "./pages/Update.vue";
+import About from "./pages/About.vue";
+import Mobile from "./pages/Mobile.vue";
 
 // Create the router
 const router = createRouter({
@@ -39,6 +41,16 @@ const router = createRouter({
       path: "/recover",
       name: "Recover",
       component: Recover,
+    },
+    {
+      path: "/app",
+      name: "App",
+      component: Mobile,
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: About,
     },
     {
       path: "/dashboard",
@@ -86,4 +98,3 @@ createApp(App)
     modules: [VueFireAuth()],
   })
   .mount("#app");
-
