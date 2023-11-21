@@ -68,37 +68,3 @@ export async function submitChapter(localChapter) {
   }
 }
 
-/*
-export async function fetchLastChapters() {
-  const chapters = [];
-  const chaptersReference = collection(db, "chapters");
-  const ask = query(
-    chaptersReference,
-    limit(5),
-    where("chapter_poster", "==", poster_uid),
-    orderBy("chapter_release"),
-  );
-
-  try {
-      // TODO: NÃO FUNCIONA CONSERTAR!!!!
-    const querySnapshot = await getDocs(ask);
-console.log(querySnapshot);
-
-    querySnapshot.forEach((lastChapter) => {
-    const lastChapterParent = db.collection('books').doc(String(lastChapter.data().chapter_parent)).get();
-    const lastChapterParentName = lastChapterParent.data().book_title;  
-              const chapter = {
-        id: doc.id,
-        title: doc.data().chapter_title,
-        release: doc.data().chapter_release,
-        parent: lastChapterParentName,
-      };
-      chapters.push(chapter);
-    });
-    console.log(chapters);
-    return chapters;
-  } catch (error) {
-    return error, false;
-  }
-}
-    */

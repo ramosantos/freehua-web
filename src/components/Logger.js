@@ -43,6 +43,7 @@ export const registerUser = async (email, password, username) => {
     return null;
   }
 };
+
 const storageUser = async (userId, username) => {
   try {
     await setDoc(doc(collection(db, "users"), userId), {
