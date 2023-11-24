@@ -30,26 +30,49 @@ export async function fetchLibrary() {
   }
 }
 
-export async function submitChapter(localChapter) {
+export async function submitChapter(localChapter, isChecked) {
   const userCredential = JSON.parse(localStorage.getItem("userCredential"));
   const poster_uid = userCredential.uid.toString();
 
-  if (localChapter.parent === null || localChapter.file === null) {
+  if (localChapter.parent === null || localChapter.file === null || localChapter.file === '') {
     alert("Insira tudo");
     return null;
   }
 
+  let level = 1;
+
   try {
-    const chapterReference = await addDoc(
-      collection(db, `books/${localChapter.parent}/chapters`),
-      {
-        chapter_parent: doc(db, `books/${localChapter.parent}`),
-        chapter_title: localChapter.title,
-        chapter_poster: poster_uid,
-        chapter_release: new Date(),
-        chapter_content: "",
-      },
+    const chapterRelativesReference = collection(
+      db,
+      `books/${localChapter.parent}/chapters`,
     );
+
+    const relatives = await getDocs(chapterRelativesReference);
+
+    if (isChecked === false) {
+      const alreadyHasOrder = relatives.docs.some((relative) => {
+        const relativeData = relative.data();
+        return relativeData.chapter_order === localChapter.order;
+      });
+
+      if (alreadyHasOrder === true) {
+        alert("Capítulo já ordernado");
+        return;
+      }
+
+      level = localChapter.order;
+    } else {
+      level = relatives.docs.length + 1;
+    }
+
+    const chapterReference = await addDoc(chapterRelativesReference, {
+      chapter_parent: doc(db, `books/${localChapter.parent}`),
+      chapter_title: localChapter.title,
+      chapter_poster: poster_uid,
+      chapter_release: new Date(),
+      chapter_content: "",
+      chapter_order: level,
+    });
 
     const storage = getStorage();
     const storageReference = ref(storage, `releases/${chapterReference.id}`);
@@ -67,4 +90,3 @@ export async function submitChapter(localChapter) {
     alert(error);
   }
 }
-
