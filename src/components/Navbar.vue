@@ -18,22 +18,25 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" v-if="user">
+
+              <router-link to="/">
           <li class="nav-item">
             <a class="nav-link active link_hua" aria-current="page" href="#">Início</a>
           </li>
-          <router-link to="/app">
+          </router-link>
+          <router-link to="/upload">
             <li class="nav-item">
-              <a class="nav-link link_hua" href="#">Aplicativo</a>
+              <a class="nav-link link_hua" href="#">Livros</a>
             </li>
           </router-link>
-          <router-link to="/about">
+          <router-link to="/update">
             <li class="nav-item">
-              <a class="nav-link link_hua" href="#">Sobre</a>
+              <a class="nav-link link_hua" href="#">Capítulos</a>
             </li>
           </router-link>
         </ul>
-        <div class="container d-flex justify-content-end">
+        <div class="container-fluid d-flex justify-content-end ms-auto">
           <div v-if="user">
             <router-link to="/dashboard">
               <button type="button" class="btn btn-secondary ms-auto">

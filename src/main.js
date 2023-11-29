@@ -15,8 +15,7 @@ import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
 import Upload from "./pages/Upload.vue";
 import Update from "./pages/Update.vue";
-import About from "./pages/About.vue";
-import Mobile from "./pages/Mobile.vue";
+import Policy from "./pages/Policy.vue";
 
 // Create the router
 const router = createRouter({
@@ -43,14 +42,9 @@ const router = createRouter({
       component: Recover,
     },
     {
-      path: "/app",
-      name: "App",
-      component: Mobile,
-    },
-    {
-      path: "/about",
-      name: "About",
-      component: About,
+      path: "/policy",
+      name: "Policy",
+      component: Policy,
     },
     {
       path: "/dashboard",

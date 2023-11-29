@@ -34,6 +34,19 @@
           placeholder="Confirme senha"
         />
       </div>
+      <div class="form-check mb-4">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="rightsCheck"
+          v-model="agreed"
+        />
+        <label class="form-check-label" for="rightsCheck">
+          Eu li e aceito
+          <router-link to="/policy"> os termos de uso do Freehua </router-link>
+        </label>
+      </div>
       <div class="container-fluid">
         <button
           @click.prevent="submit"
@@ -62,12 +75,18 @@ export default {
       email: "",
       password: "",
       confirmation: "",
+      agreed: false,
     };
   },
   methods: {
     async submit() {
       if (this.confirmation !== this.password) {
         alert("Senhas não condizem");
+        return null;
+      }
+
+      if (!this.agreed) {
+        alert("Aceite os termos de uso para se cadastrar");
         return null;
       }
 
